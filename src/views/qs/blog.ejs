@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Zypher</title>
+    <link rel="icon" href="/esaw/vid-user-logo-defaul/zypherr(1).png">
+
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1e90ff;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #00d1b2;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1e1e2e, #292938);
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 2px solid #1e90ff;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #9da5b4;
+        }
+
+        /* Main Container */
+        .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Blog Main Section */
+        .blog-main {
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-main h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #00d1b2;
+        }
+
+        .post {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #292938;
+            padding-bottom: 20px;
+        }
+
+        .post h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #9da5b4;
+        }
+
+        .post p {
+            color: #b2b2b2;
+            margin: 10px 0;
+        }
+
+        .post a {
+            font-weight: bold;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .author-info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .author-info span {
+            color: #9da5b4;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #00d1b2;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li a {
+            color: #1e90ff;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e1e2e;
+            color: #9da5b4;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 2px solid #1e90ff;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <%- include('./header.ejs') %>
+
+    <header>
+        <h1>Bienvenido al Blog de Zypher</h1>
+        <p>Explora nuestras últimas actualizaciones y artículos destacados</p>
+    </header>
+
+    <div class="container">
+        <!-- Blog Main Content -->
+        <div class="blog-main">
+            <h2>Últimos Artículos</h2>
+            <% if (blogs.length > 0) { %>
+                <% blogs.forEach(blog => { %>
+                    <div class="post">
+                        <h3>
+                            <a href="/Zypher/blog/post/<%= blog.post_id %>"><%= blog.titulo %></a>
+                        </h3>
+                        <p><strong>Publicado el:</strong> <%= new Date(blog.fecha_publicacion).toLocaleDateString() %></p>
+                        <p><%= blog.descripcion %></p>
+                        <div class="author-info">
+                            <img src="/creator/fp/<%= blog.avatar %>" alt="Avatar de <%= blog.username %>">
+                            <span>Por <%= blog.username %> - <%= blog.rol %></span>
+                        </div>
+                        <a href="/Zypher/blog/post/<%= blog.post_id %>">Leer más &rarr;</a>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No hay publicaciones disponibles.</p>
+            <% } %>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Categorías</h3>
+            <% if (categorias.length > 0) { %>
+                <ul>
+                    <% categorias.forEach(categoria => { %>
+                        <li><a href="/Zypher/blog/categoria/<%= categoria.categoria_id %>"><%= categoria.nombre %></a></li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No hay categorias.</p>
+            <% } %>
+
+            <h3>Posts Recientes</h3>
+            <% if (blogs.length > 0) { %>
+                <ul>
+                    <% blogs.forEach(blog => { %>
+                        <li><a href="/Zypher/blog/post/<%= blog.post_id %>"><%= blog.titulo %></a></li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No hay publicaciones disponibles.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('../banners/footer.ejs') %>
+</body>
+</html>

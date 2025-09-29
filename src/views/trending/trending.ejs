@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>.trending-section {
+    padding: 20px;
+    color: #ffffff; /* Texto claro */
+  }
+  .content {
+  margin-left: 270px;
+  margin-top: 80px;
+  padding: 20px;
+}
+  .section-title {
+    font-size: 24px;
+    color: #d1d1d1;
+    margin-bottom: 15px;
+  }
+  
+  .trending-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .video-card {
+    width: calc(25% - 15px);
+    background-color: #1c1c1c; /* Suboscuro */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .video-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .video-thumbnail {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-bottom: 2px solid #333333;
+  }
+  
+  .video-info {
+    padding: 10px;
+  }
+  
+  .video-title {
+    font-size: 16px;
+    color: #ffffff;
+    margin: 0 0 5px;
+  }
+  
+  .video-stats {
+    font-size: 14px;
+    color: #999999;
+  }</style>
+</head>
+<body>
+  <%- include('../banners/heade.ejs') %>
+  <!-- Include sidebar -->
+  <%- include('../banners/sliderbar.ejs') %>
+  <main class="content">
+
+  <div class="trending-section">
+    <h2 class="section-title">Trending</h2>
+    <div class="trending-container">
+      <% trendingVideos.forEach(video => { %>
+        <div class="video-card">
+          <a href="/video/<%= video.id %>">
+            <img src="<%= video.minea ? '/vid/min/' + video.minea : '/esaw/vid-user-logo-defaul/banerdf.jpg' %>" alt="<%= video.title %>" class="video-thumbnail">
+          </a>
+          <div class="video-info">
+            <h3 class="video-title"><%= video.titulo %></h3>
+            <p class="video-stats">
+              <span><%= video.vistas %> views</span> · 
+              <span><%= video.fecha_publicacion %></span>
+            </p>
+          </div>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+  
+</div>  <%- include('../banners/footer.ejs') %>
+
+
+  <script></script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/asdf/banner/header.css">
+    
+</head>
+<body>
+  <header class="header">
+      <div class="logo" id="zyp">
+          <img src="/esaw/vid-user-logo-defaul/zypherr(1).png" alt="Streamly Logo">
+          <span class="txt">Zypher</span>
+      </div>
+      <div class="search-bar">
+          <input type="text" placeholder="Search videos...">
+          <button><img class="imgs" src="/esaw/icons/busqueda-de-lupa.png" alt="Search"></button>
+      </div>
+      <div class="profile">
+          <img src="/esaw/vid-user-logo-defaul/userdf.jpg" alt="Profile" class="profile-icon">
+          <div class="dropdown-menu">
+            <% if (userid == null) { %>
+              <button class="btn-dropmenu">Login</button>
+       
+              <% } else { %>
+                <button class="btn-dropmenu">Upload Video</button>
+            <button class="btn-dropmenu">My Account</button>
+            <button class="btn-dropmenu">Settings</button>
+            <button class="btn-dropmenu">Logout</button>
+            <% } %>
+          </div>
+      </div>
+  </header>
+
+  <script>
+
+   document.addEventListener("DOMContentLoaded", () => {
+  // Dropdown de perfil
+  const BTNZ = document.getElementById('zyp');
+  const profileIcon = document.querySelector('.profile img');
+  const dropdownMenu = document.querySelector('.dropdown-menu');
+  BTNZ.addEventListener('clik',()=>{
+  window.location.href('/');
+})
+  profileIcon.addEventListener('click', () => {
+    dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  // Cerrar dropdown al hacer clic fuera
+  document.addEventListener('click', (event) => {
+    if (!profileIcon.contains(event.target) && !dropdownMenu.contains(event.target)) {
+      dropdownMenu.style.display = 'none';
+    }
+  });
+
+  // Funcionalidades para cada botón del menú desplegable
+  const uploadButton = document.querySelector('.btn-dropmenu:nth-child(1)');
+  const accountButton = document.querySelector('.btn-dropmenu:nth-child(2)');
+  const settingsButton = document.querySelector('.btn-dropmenu:nth-child(3)');
+  const logoutButton = document.querySelector('.btn-dropmenu:nth-child(4)');
+
+  uploadButton.addEventListener('click', () => {
+    window.location.href = '/upload';
+  });
+
+  accountButton.addEventListener('click', () => {
+    window.location.href = '/my-account';
+  });
+
+  settingsButton.addEventListener('click', () => {
+    window.location.href = '/settings';
+  });
+
+  logoutButton.addEventListener('click', () => {
+    window.location.href = '/logout';
+  });
+
+  // Función de búsqueda de videos
+  const searchButton = document.querySelector('.search-bar button');
+  const searchInput = document.querySelector('.search-bar input');
+
+  searchButton.addEventListener('click', () => {
+    const query = searchInput.value.trim();
+    if (query) {
+      window.location.href = `/search?query=${encodeURIComponent(query)}`;
+    }
+  });
+
+  // Cargar más videos
+  const loadMoreBtn = document.getElementById("load-more-btn");
+  const trendingVideosSection = document.querySelector(".videos");
+
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", async () => {
+      try {
+        const response = await fetch('/api/videos?section=trending');
+        const newVideos = await response.json();
+
+        newVideos.forEach(video => {
+          const videoCard = document.createElement('a');
+          videoCard.href = `/video/${video.video_id}`;
+          videoCard.classList.add('video-card', 'random');
+          videoCard.innerHTML = `
+            <img src="${video.minea ? '/vid/min/' + video.minea : '/esaw/vid-user-logo-defaul/banerdf.jpg'}" alt="Video Thumbnail">
+            <div class="video-info">
+              <h3>${video.titulo}</h3>
+              <p>${video.usernick} • ${video.vistas} views</p>
+            </div>
+          `;
+          trendingVideosSection.appendChild(videoCard);
+        });
+      } catch (error) {
+        console.error('Error loading more videos:', error);
+      }
+    });
+  }
+});
+
+  </script>
+</body>
+</html>

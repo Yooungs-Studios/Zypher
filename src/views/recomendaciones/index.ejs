@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendaciones</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #2a2a2a, #3f3f3f);
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #1e1e1e;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #3a99d8;
+        }
+        header h1 {
+            margin: 0;
+            color: #3a99d8;
+            font-size: 2em;
+        }
+        .container {
+            flex: 1;
+            padding: 20px;
+            max-width: 900px;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #2f2f2f;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        table th, table td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #444;
+        }
+        table th {
+            background-color: #3a99d8;
+            color: #fff;
+        }
+        table tr:hover {
+            background-color: #3a3a3a;
+        }
+        table td a {
+            color: #3a99d8;
+            text-decoration: none;
+        }
+        table td a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border-top: 3px solid #3a99d8;
+        }
+        footer p {
+            margin: 0;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Recomendaciones de Videos</h1>
+    </header>
+    <div class="container">
+        <h2>Tus Recomendaciones</h2>
+        <p>Basándonos en tus preferencias, hemos seleccionado los mejores videos para ti. ¡Explóralos a continuación!</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <!-- <th>Descripción</th> -->
+                    <th>Puntaje</th>
+                    <th>Enlace</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (videos.length > 0) { %>
+                    <% videos.forEach(video => { %>
+                        <tr>
+                            <td><%= video.titulo %></td>
+                            <!-- <td><%= video.descripcion %></td> -->
+                            <td><%= video.puntaje %></td>
+                            <td><a href="<%= video.enlace %>" target="_blank">Ver Video</a></td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="4" style="text-align: center;">No hay recomendaciones disponibles.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <p>&copy; 2024 KinglyFenix Studios. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

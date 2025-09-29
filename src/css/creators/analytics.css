@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+header {
+    background-color: #17a2b8;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+main {
+    padding: 20px;
+}
+#overview-charts {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+#overview-charts div {
+    background: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex: 1;
+    text-align: center;
+}
+#demographics p {
+    background: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}

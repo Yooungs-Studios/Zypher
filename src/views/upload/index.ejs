@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir Video - Zypher</title>
+    <style>
+        /* Paleta de Colores */
+        :root {
+            --black: #121212;
+            --dark-gray: #1A1A1A;
+            --emerald-green: #4E9F88;
+            --metallic-gold: #B19D5D;
+            --coral-red: #FF5C5C;
+            --light-gray: #D1D1D1;
+            --input-border: #4E9F88;
+        }
+
+        /* Estilo General */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--black);
+            color: var(--light-gray);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 20%;
+            background-color: var(--dark-gray);
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar h2 {
+            color: var(--emerald-green);
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar .step {
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: left;
+            background-color: var(--dark-gray);
+            transition: background-color 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .sidebar .step:hover, .sidebar .step.active {
+            background-color: var(--emerald-green);
+            color: var(--black);
+            border: 1px solid var(--input-border);
+        }
+
+        .content {
+            width: 80%;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        /* Estilos para la pantalla de carga */
+        #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            display: none; /* Ocultado por defecto */
+        }
+
+        .loading-message {
+            text-align: center;
+            left: 10px;
+        }
+
+        .loader {
+            border: 4px solid #f3f3f3; /* Color claro */
+            border-top: 4px solid var(--emerald-green);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--light-gray);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            background-color: var(--black);
+            color: var(--light-gray);
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--emerald-green);
+            box-shadow: 0 0 5px var(--emerald-green);
+        }
+
+        button {
+            background-color: var(--emerald-green);
+            color: var(--black);
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: var(--metallic-gold);
+        }
+
+        video, img {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid var(--input-border);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Pasos</h2>
+        <div class="step active" data-step="1">1. Subir Video</div>
+        <div class="step" data-step="2">2. Título</div>
+        <div class="step" data-step="3">3. Descripción</div>
+        <div class="step" data-step="4">4. Categoría</div>
+        <div class="step" data-step="5">5. Miniatura</div>
+        <div class="step" data-step="6">6. Finalizar</div>
+    </div>
+    <div class="content">
+        <div id="loadingScreen" class="hidden">
+            <div class="loading-message">
+                <h2>Subiendo Video...</h2>
+                <div class="loader"></div> <!-- Un simple loader (puedes personalizarlo) -->
+            </div>
+        </div>
+        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+            <!-- Paso 1: Subir Video -->
+            <div id="step-1" class="step-content">
+                <h2>Subir Video</h2>
+                <label for="videoFile">Archivo de Video:</label>
+                <input type="file" id="videoFile" name="videoFile" accept="video/*" required>
+                <video id="videoPreview" controls>
+                    <source src="" type="video/mp4">
+                    Tu navegador no soporta la etiqueta de video.
+                </video>
+            </div>
+
+            <!-- Paso 2: Título -->
+            <div id="step-2" class="step-content hidden">
+                <h2>Título del Video</h2>
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
+            </div>
+
+            <!-- Paso 3: Descripción -->
+            <div id="step-3" class="step-content hidden">
+                <h2>Descripción</h2>
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+            </div>
+
+            <!-- Paso 4: Categoría -->
+            <div id="step-4" class="step-content hidden">
+                <h2>Categoría</h2>
+                <label for="categoria">Selecciona una Categoría:</label>
+                <select id="categoria" name="categoria" required>
+                    <option value="entretenimiento">Entretenimiento</option>
+                    <option value="educación">Educación</option>
+                    <option value="deportes">Deportes</option>
+                    <option value="música">Música</option>
+                </select>
+                
+                <div class="section">
+                    <label for="tags">Etiquetas (separadas por comas):</label>
+                    <input type="text" id="tags" name="tags" class="animated">
+                </div>
+            </div>
+
+            <!-- Paso 5: Miniatura -->
+            <div id="step-5" class="step-content hidden">
+                <h2>Subir Miniatura</h2>
+                <label for="thumbnailFile">Miniatura:</label>
+                <input type="file" id="thumbnailFile" name="thumbnailFile" accept="image/*" required>
+                <img id="thumbnailPreview" src="" alt="Vista previa de miniatura">
+            </div>
+
+            <!-- Paso 6: Finalizar -->
+            <div id="step-6" class="step-content hidden">
+                <h2>Revisar y Subir</h2>
+                <div id="reviewSection">
+                    <!-- Aquí se mostrarán los datos -->
+                </div>
+                <button type="submit">Subir Video</button>
+            </div>
+        </form>
+    </div>
+ 
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevenir el comportamiento por defecto (envío inmediato)
+
+            // Mostrar la pantalla de carga
+            document.getElementById('loadingScreen').style.display = 'flex';
+
+            // Enviar el formulario usando AJAX para no recargar la página
+            const formData = new FormData(this);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Cuando la carga se complete, ocultar la pantalla de carga
+                document.getElementById('loadingScreen').style.display = 'none';
+                
+                // Redirigir o mostrar un mensaje de éxito, dependiendo de tu lógica
+                window.location.href = '/'; // O cualquier otra lógica de éxito
+            })
+            .catch(error => {
+                console.error('Error durante la carga:', error);
+                document.getElementById('loadingScreen').style.display = 'none';
+                alert('Video subido con exito.');
+                window.location.href = '/';
+            });
+        });
+
+        const steps = document.querySelectorAll('.step');
+        const contents = document.querySelectorAll('.step-content');
+
+        steps.forEach(step => {
+            step.addEventListener('click', () => {
+                // Cambiar estado activo
+                steps.forEach(s => s.classList.remove('active'));
+                step.classList.add('active');
+
+                // Mostrar el contenido correspondiente
+                const stepNumber = step.getAttribute('data-step');
+                contents.forEach(content => content.classList.add('hidden'));
+                document.getElementById(`step-${stepNumber}`).classList.remove('hidden');
+                
+                if (stepNumber === '6') {
+                    updateReviewSection();
+                }
+            });
+        });
+
+        // Actualizar sección de revisión en Paso 6
+        function updateReviewSection() {
+            const reviewSection = document.getElementById('reviewSection');
+            const titulo = document.getElementById('titulo').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const categoria = document.getElementById('categoria').value;
+            const tags = document.getElementById('tags').value;
+            const videoPreviewSrc = document.getElementById('videoPreview').src;
+            const thumbnailPreviewSrc = document.getElementById('thumbnailPreview').src;
+
+            reviewSection.innerHTML = `
+                <h3>Resumen del Video</h3>
+                <p><strong>Título:</strong> ${titulo}</p>
+                <p><strong>Descripción:</strong> ${descripcion}</p>
+                <p><strong>Categoría:</strong> ${categoria}</p>
+                <p><strong>Etiquetas:</strong> ${tags}</p>
+                <div>
+                    <strong>Vista previa del Video:</strong>
+                    <video src="${videoPreviewSrc}" controls style="width: 100%;"></video>
+                </div>
+                <div>
+                    <strong>Vista previa de la Miniatura:</strong>
+                    <img src="${thumbnailPreviewSrc}" alt="Miniatura" style="width: 100%; border-radius: 8px; margin-top: 10px;">
+                </div>
+            `;
+        }
+
+        // Previsualización de video
+        document.getElementById('videoFile').addEventListener('change', function(e) {
+            const videoPreview = document.getElementById('videoPreview');
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                videoPreview.src = url;
+            }
+        });
+
+        // Previsualización de miniatura
+        document.getElementById('thumbnailFile').addEventListener('change', function(e) {
+            const thumbnailPreview = document.getElementById('thumbnailPreview');
+            const file = e.target.files[0];
+            if (file) {
+                const url = URL.createObjectURL(file);
+                thumbnailPreview.src = url;
+            }
+        });
+    </script>
+</body>
+</html>

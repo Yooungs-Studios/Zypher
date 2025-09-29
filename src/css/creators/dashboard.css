@@ -1,0 +1,52 @@
+   /* Estilos generales */
+   body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+}
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+main {
+    padding: 20px;
+}
+#metrics {
+    display: flex;
+    gap: 20px;
+}
+.metric {
+    background: white;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex: 1;
+    text-align: center;
+}
+#charts {
+    margin-top: 20px;
+}
+#quick-access {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+/* Estilo para el contenedor de la gráfica */
+#chart-container {
+    text-align: center;
+}

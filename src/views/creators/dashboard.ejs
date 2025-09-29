@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/asdf/creators/dashboard.css">
+    <!-- Incluir Chart.js desde CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Panel Principal</h1>
+    </header>
+    <main>
+        <section id="metrics">
+            <div class="metric">
+                <h2>Seguidores</h2>
+                <p><%= followers %></p>
+            </div>
+            <div class="metric">
+                <h2>Vistas Recientes</h2>
+                <p><%= recentViews %></p>
+            </div>
+            <div class="metric">
+                <h2>Ganancias Estimadas</h2>
+                <p>$<%= estimatedEarnings %></p>
+            </div>
+        </section>
+
+        <section id="charts">
+            <h2>Gráficas de Rendimiento</h2>
+            <div id="chart-container"></div>
+            <!-- El canvas donde se dibujará la gráfica -->
+            <canvas id="performanceChart" width="400" height="200"></canvas>
+        </section>
+
+        <section id="quick-access">
+            <h2>Accesos Rápidos</h2>
+            <button onclick="uploadContent()">Subir Contenido</button>
+            <button onclick="respondComments()">Responder Comentarios</button>
+            <button onclick="checkMessages()">Revisar Mensajes</button>
+        </section>
+    </main>
+    <script src="/asdf2/creators/dashboard.js"></script>
+</body>
+</html>

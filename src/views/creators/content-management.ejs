@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Contenidos</title>
+    <link rel="stylesheet" href="/styles/content-management.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Contenidos</h1>
+    </header>
+    <main>
+        <section id="content-list">
+            <h2>Contenido Subido</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Miniatura</th>
+                        <th>Título</th>
+                        <th>Fecha</th>
+                        <th>Estado</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% contents.forEach(content => { %>
+                        <tr>
+                            <td><img src="<%= content.thumbnail %>" alt="Miniatura"></td>
+                            <td><%= content.title %></td>
+                            <td><%= content.date %></td>
+                            <td><%= content.status %></td>
+                            <td>
+                                <button onclick="editContent('<%= content.id %>')">Editar</button>
+                                <button onclick="deleteContent('<%= content.id %>')">Eliminar</button>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="/scripts/content-management.js"></script>
+</body>
+</html>

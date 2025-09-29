@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/asdf/banner/sliderbar.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <nav>
+            <ul>
+                <li id="home-btn">Home</li>
+                <li id="trending-btn">Trending</li>
+                <li id="subscriptions-btn">Subscriptions</li>
+                <ul id="submenu-subscriptions" class="submenu">                
+                    <% if (userid == null) { %>
+                      <li>Login</li>
+                     <% } else { %>
+                      <% if (userSubscriptions) { %>
+                        <li>No sigues a nadien</li>
+                        <% } else { %>
+                          <% userSubscriptions.forEach(subs => { %>
+                            <li><%= subs.nickname %></li>
+                            <% }) %>
+                          <% } %>
+                           <% } %>
+                </ul>
+                <li id="liked-videos-btn">Liked Videos</li>
+                <li id="watch-later-btn">Watch Later</li>
+            </ul>
+        </nav>
+    </aside>
+
+    <div id="notification-container" style="position: fixed; top: 20px; right: 20px;"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Función para mostrar notificaciones
+            // function showNotification(message) {
+            //     const notificationContainer = document.getElementById('notification-container');
+            //     const notification = document.createElement('div');
+            //     notification.classList.add('notification');
+            //     notification.textContent = message;
+            //     notification.style.background = '#3498db';
+            //     notification.style.color = '#fff';
+            //     notification.style.padding = '10px';
+            //     notification.style.marginBottom = '10px';
+            //     notification.style.borderRadius = '5px';
+            //     notificationContainer.appendChild(notification);
+
+            //     // Eliminar la notificación después de 3 segundos
+            //     setTimeout(() => {
+            //         notification.remove();
+            //     }, 3000);
+            // }
+
+            // Botones del sidebar
+            document.getElementById('home-btn').addEventListener('click', () => {
+                window.location.href = '/';
+            });
+
+            document.getElementById('trending-btn').addEventListener('click', () => {
+                window.location.href = '/trending';
+            });
+
+            document.getElementById('liked-videos-btn').addEventListener('click', () => {
+                window.location.href = '/liked-videos';
+            });
+
+            document.getElementById('watch-later-btn').addEventListener('click', () => {
+                window.location.href = '/watch-later';
+            });
+
+            // Función para mostrar/ocultar el submenú de Subscriptions
+            const subscriptionsBtn = document.getElementById('subscriptions-btn');
+            const submenu = document.getElementById('submenu-subscriptions');
+
+            subscriptionsBtn.addEventListener('click', () => {
+                submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+                showNotification('Toggling Subscriptions Menu');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Avanzado</title>
+    <link rel="stylesheet" href="/styles/analytics.css">
+</head>
+<body>
+    <header>
+        <h1>Análisis Avanzado</h1>
+    </header>
+    <main>
+        <section id="overview">
+            <h2>Visión General</h2>
+            <div id="overview-charts">
+                <div id="views-chart">Gráfica de Vistas</div>
+                <div id="traffic-chart">Gráfica de Fuentes de Tráfico</div>
+            </div>
+        </section>
+
+        <section id="demographics">
+            <h2>Demografía</h2>
+            <p><strong>Edad:</strong> <%= demographics.age %></p>
+            <p><strong>Género:</strong> <%= demographics.gender %></p>
+            <p><strong>Ubicación Principal:</strong> <%= demographics.location %></p>
+        </section>
+    </main>
+    <script src="/scripts/analytics.js"></script>
+</body>
+</html>

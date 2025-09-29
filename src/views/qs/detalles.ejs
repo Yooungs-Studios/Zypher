@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de Algoritmos - Zypher</title>
+    <link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            background: linear-gradient(120deg, #0d1117, #0b132b);
+            color: #d1d5db;
+        }
+
+        header {
+            width: 100%;
+            padding: 20px;
+            background-color: #161b22;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        header h1 {
+            color: #3b82f6;
+            font-size: 3.5em;
+            font-weight: bold;
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .content {
+            max-width: 1000px;
+            width: 90%;
+            margin: 40px 0;
+            padding: 20px;
+            background-color: #1b263b;
+            border-radius: 12px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #3b82f6;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 5px;
+        }
+
+        .section p, .section li {
+            color: #a0aec0;
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #3b82f6;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .button:hover {
+            background-color: #2563eb;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 20px;
+            background-color: #161b22;
+            width: 100%;
+            text-align: center;
+        }
+
+        footer p {
+            color: #a0aec0;
+        }
+
+        footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            color: #2563eb;
+        }
+    </style>
+    <%- include('./header.ejs') %>
+
+    <header>
+        <h1>Detalles de Algoritmos</h1>
+    </header>
+
+    <div class="content">
+        <!-- ClickRec+ -->
+        <div class="section" id="clickrec">
+            <h2>ClickRec+ (Recomendaciones avanzadas por clics y vistas)</h2>
+            <p><strong>Objetivo:</strong> Priorizar videos populares teniendo en cuenta clics, vistas, tendencias y relevancia para el usuario.</p>
+            <p><strong>Funcionamiento:</strong> Este algoritmo combina datos de clics, vistas y el historial de interacción del usuario para calcular un puntaje ponderado. Los videos con puntajes más altos aparecen en las primeras posiciones.</p>
+            <ul>
+                <li>Fórmula principal: <code>Puntaje = (Clics × Peso1) + (Vistas × Peso2) + (Historial × Peso3)</code>.</li>
+                <li>Se actualiza cada 10 minutos para garantizar la relevancia.</li>
+            </ul>
+        </div>
+
+        <!-- SubRec+ -->
+        <div class="section" id="subrec">
+            <h2>SubRec+ (Recomendaciones avanzadas por suscripciones)</h2>
+            <p><strong>Objetivo:</strong> Resaltar contenido relevante de los canales suscritos, priorizando interacciones recientes y populares.</p>
+            <p><strong>Funcionamiento:</strong> Analiza la actividad reciente de los canales suscritos y prioriza el contenido basado en:</p>
+            <ul>
+                <li>Tiempo de publicación (más reciente tiene mayor prioridad).</li>
+                <li>Interacciones (número de "Me gusta", comentarios, etc.).</li>
+                <li>Preferencias pasadas del usuario en esos canales.</li>
+            </ul>
+        </div>
+
+        <!-- TasteRec+ -->
+        <div class="section" id="tasterec">
+            <h2>TasteRec+ (Recomendaciones basadas en gustos similares)</h2>
+            <p><strong>Objetivo:</strong> Encontrar contenido que otros usuarios con gustos similares han disfrutado.</p>
+            <p><strong>Funcionamiento:</strong> Implementa técnicas de filtrado colaborativo para comparar el historial de visualización del usuario con perfiles similares:</p>
+            <ul>
+                <li>Analiza "Me gusta", historial de reproducciones y búsquedas.</li>
+                <li>Calcula similitud con otros usuarios mediante el algoritmo <code>coseno de similitud</code>.</li>
+                <li>Propone contenido que fue altamente valorado por perfiles similares.</li>
+            </ul>
+        </div>
+
+        <!-- EngageRec -->
+        <div class="section" id="engagerec">
+            <h2>EngageRec (Recomendaciones basadas en participación)</h2>
+            <p><strong>Objetivo:</strong> Promover videos que generan más participación (comentarios, compartidos, etc.).</p>
+            <p><strong>Funcionamiento:</strong> Este algoritmo prioriza el contenido según:</p>
+            <ul>
+                <li>Número de comentarios y discusiones activas.</li>
+                <li>Veces que el video ha sido compartido en redes sociales.</li>
+                <li>Duración promedio de visualización.</li>
+            </ul>
+        </div>
+
+        <!-- RandRec+ -->
+        <div class="section" id="randrec">
+            <h2>RandRec+ (Recomendaciones aleatorias con criterio)</h2>
+            <p><strong>Objetivo:</strong> Sugerir videos variados para descubrir nuevo contenido.</p>
+            <p><strong>Funcionamiento:</strong> Selecciona aleatoriamente videos con ciertos filtros para evitar irrelevancia:</p>
+            <ul>
+                <li>Evita sugerir contenido ya visto.</li>
+                <li>Prioriza categorías que el usuario aún no ha explorado.</li>
+                <li>Incorpora elementos aleatorios para sorprender al usuario.</li>
+            </ul>
+        </div>
+        <div class="section" id="trendfactor">
+            <h2>TrendFactor (Factor de Tendencia para Videos)</h2>
+            <p><strong>Objetivo:</strong> Calcular un puntaje dinámico para los videos, evaluando su popularidad y relevancia a lo largo del tiempo.</p>
+            <p><strong>Funcionamiento:</strong> Este sistema utiliza una fórmula avanzada para calcular el atributo <code>trend_factor</code>, que se actualiza periódicamente en la base de datos. Los detalles son:</p>
+            <ul>
+                <li>La fórmula combina métricas de interacción como <code>vistas</code>, <code>likes</code>, <code>dislikes</code>, <code>clics</code>, <code>compartidos</code>, y <code>comentarios</code>.</li>
+                <li>Cada métrica tiene un peso específico:
+                    <ul>
+                        <li><code>Vistas:</code> 10% del peso total.</li>
+                        <li><code>Likes:</code> 30% del peso total.</li>
+                        <li><code>Dislikes:</code> -20% (disminuye el puntaje).</li>
+                        <li><code>Clics:</code> 10% del peso total.</li>
+                        <li><code>Compartidos:</code> 30% del peso total.</li>
+                        <li><code>Comentarios:</code> 30% del peso total.</li>
+                    </ul>
+                </li>
+                <li>Incluye un factor de ajuste temporal basado en el tiempo transcurrido desde la publicación del video:
+                    <ul>
+                        <li>Usa la función <code>log</code> para disminuir gradualmente la importancia de videos más antiguos.</li>
+                        <li>El cálculo toma la diferencia de días desde la publicación y la convierte en horas.</li>
+                    </ul>
+                </li>
+            </ul>
+            <p><strong>Fórmula:</strong></p>
+            <pre>
+        trend_factor = (
+            (vistas * 0.1) + 
+            (likes * 0.3) - 
+            (dislikes * 0.2) +  
+            (clics * 0.1) + 
+            (compartidos * 0.3) + 
+            (comentarios * 0.3)
+        ) / (1 + log(1 + (julianday('now') - julianday(fecha_publicacion)) * 24))
+            </pre>
+            <p><strong>Actualización:</strong> El puntaje se recalcula automáticamente en intervalos definidos (por ejemplo, cada hora) mediante una función programada en el backend.</p>
+            <p><strong>Implementación:</strong> Este sistema está integrado directamente con la base de datos y utiliza SQL para calcular y actualizar el valor de manera eficiente.</p>
+        </div>
+        
+        <a href="/" class="button">Volver al Inicio</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Zypher. Todos los derechos reservados. <a href="/terminos">Términos</a> | <a href="/privacidad">Política de Privacidad</a></p>
+    </footer>
+</body>
+</html>

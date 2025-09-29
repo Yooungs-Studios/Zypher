@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de Perfil</title>
+    <link rel="stylesheet" href="/styles/profile-settings.css">
+</head>
+<body>
+    <header>
+        <h1>Configuración de Perfil</h1>
+    </header>
+    <main>
+        <form id="profile-form">
+            <h2>Información Básica</h2>
+            <label for="profile-name">Nombre:</label>
+            <input type="text" id="profile-name" name="name" value="<%= profile.name %>">
+
+            <label for="profile-description">Descripción:</label>
+            <textarea id="profile-description" name="description"><%= profile.description %></textarea>
+
+            <label for="profile-image">Imagen de Perfil:</label>
+            <input type="file" id="profile-image" name="image">
+
+            <label for="profile-banner">Banner:</label>
+            <input type="file" id="profile-banner" name="banner">
+
+            <h2>Redes Sociales</h2>
+            <label for="social-twitter">Twitter:</label>
+            <input type="url" id="social-twitter" name="twitter" value="<%= profile.socials.twitter %>">
+
+            <label for="social-instagram">Instagram:</label>
+            <input type="url" id="social-instagram" name="instagram" value="<%= profile.socials.instagram %>">
+
+            <h2>Notificaciones</h2>
+            <label>
+                <input type="checkbox" name="notifications" value="email" <% if(profile.notifications.email) { %>checked<% } %>>
+                Email
+            </label>
+            <label>
+                <input type="checkbox" name="notifications" value="push" <% if(profile.notifications.push) { %>checked<% } %>>
+                Push
+            </label>
+
+            <button type="submit">Guardar Cambios</button>
+        </form>
+    </main>
+    <script src="/scripts/profile-settings.js"></script>
+</body>
+</html>

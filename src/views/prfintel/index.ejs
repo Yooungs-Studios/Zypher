@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= creador.nickname %></title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 61px 0;
+        }
+
+        header {
+            text-align: center;
+            background-color: #1e1e1e;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header .banner {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        header .banner-placeholder {
+            height: 300px;
+            background-color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #e0e0e0;
+        }
+
+        header .info {
+            margin-top: -50px;
+            padding: 20px;
+            background-color: #1e1e1e67;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        header .info img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #00bcd4;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: #00bcd4;
+        }
+
+        header p {
+            color: #b0bec5;
+            font-size: 1rem;
+        }
+
+        /* Redes sociales */
+        .social-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: #00bcd4;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+
+        main h2 {
+            font-size: 1.8rem;
+            color: #00bcd4;
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #00bcd4;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        main ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            list-style: none;
+            padding: 0;
+        }
+
+        main li {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        main li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        main li .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        main li .video-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        main li .video-info h3 {
+            font-size: 1.2rem;
+            color: #00bcd4;
+            margin-bottom: 10px;
+        }
+
+        main li .video-info p {
+            font-size: 0.9rem;
+            color: #b0bec5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #1e1e1e;
+            border-top: 2px solid #333;
+            color: #b0bec5;
+        }
+
+        footer a {
+            color: #00bcd4;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <% if (creador.banner) { %>
+            <div class="banner" style="background-image: url('/creator/banners/<%= creador.banner %>');"></div>
+        <% } else { %>
+            <div class="banner-placeholder">Banner no disponible</div>
+        <% } %>
+
+        <div class="info">
+            <img src="/creator/fp/<%= creador.avatar %>" alt="Avatar de <%= creador.nickname %>">
+            <h1><%= creador.nickname %></h1>
+            <p><%= creador.descripcion %></p>
+            <p><strong>Suscriptores:</strong> <%= creador.suscriptores %></p>
+            <p><strong>Videos subidos:</strong> <%= creador.videos_subidos %></p>
+
+            <!-- Redes sociales -->
+        </div>
+    </header>
+
+    <main>
+        <h2>Videos</h2>
+        <% if (videos.length > 0) { %>
+            <ul>
+                <% videos.forEach(video => { %>
+                    <li>
+                        <!-- Miniatura del video -->
+                        <div class="video-thumbnail" style="background-image: url('/vid/min/<%= video.minea %>');"></div>
+                       
+                        <!-- Información del video -->
+                        <div class="video-info">
+                            <h3><%= video.titulo %></h3>
+                            <p>Vistas: <%= video.vistas %> | Likes: <%= video.likes %></p>
+                            <p>Publicado: <%= new Date(video.fecha_publicacion).toLocaleDateString() %></p>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No hay videos disponibles.</p>
+        <% } %>
+    </main>
+
+    <footer>
+        <p>&copy; <%= new Date().getFullYear() %> Canal de <%= creador.nickname %>. Todos los derechos reservados.</p>
+        <p><a href="#">Política de privacidad</a> | <a href="#">Términos de servicio</a></p>
+    </footer>
+</body>
+</html>

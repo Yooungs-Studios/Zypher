@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zypher</title>
+  <link rel="stylesheet" href="/asdf/home/styles.css">
+  <link rel="icon" href="/esaw/vid-user-logo-defaul/zypherr(1).png">
+</head>
+<body>
+  <!-- Include header -->
+  <%- include('../banners/heade.ejs') %>
+  <!-- Include sidebar -->
+  <%- include('../banners/sliderbar.ejs') %>
+
+  
+  <main class="content">
+    <% if (recommendedVideos.length > 0) { %>
+
+    <h2 class="tit">Suggested for You</h2>
+
+    <section class="videos">
+      <!-- Check if there are recommended videos -->
+        <% recommendedVideos.forEach(video => { %>
+          <a href="/video/<%= video.video_id %>" class="video-card suggested">
+            <img src="<%= video.minea ? '/vid/min/' + video.minea : '/esaw/vid-user-logo-defaul/banerdf.jpg' %>" alt="Video Thumbnail" loading="lazy">
+            <div class="video-info">
+              <h3><%= video.titulo %></h3>
+              <p><%= video.nickname %> • <%= video.vistas %> views</p>
+            </div>
+          </a>
+        <% }) %>
+        <% } %>
+    </section>
+    <% if (trendingVideos.length > 0) { %>
+
+    <h2 class="tit">Trending Now</h2>
+    <section class="videos">
+      <!-- Check if there are trending videos -->
+        <% trendingVideos.forEach(video => { %>
+          <a href="/video/<%= video.video_id %>" class="video-card trending">
+            <img src="<%= video.minea ? '/vid/min/' + video.minea : '/esaw/vid-user-logo-defaul/banerdf.jpg' %>" alt="Video Thumbnail" loading="lazy">
+            <div class="video-info">
+              <h3><%= video.titulo %></h3>
+              <p><%= video.nickname %> • <%= video.vistas %> views</p>
+            </div>
+          </a>
+        <% }) %>
+        <% } %>    </section>
+    <% if (randomVideos.length > 0) { %>
+
+    <h2 class="tit">Random Videos</h2>
+    <section class="videos random">
+      <!-- Check if there are random videos -->
+        <% randomVideos.forEach(video => { %>
+          <a href="/video/<%= video.video_id %>" class="video-card random">
+            <img src="<%= video.minea ? '/vid/min/' + video.minea : '/esaw/vid-user-logo-defaul/banerdf.jpg' %>" alt="Video Thumbnail" loading="lazy">
+            <div class="video-info">
+              <h3><%= video.titulo %></h3>
+              <p><%= video.nickname %> • <%= video.vistas %> views</p>
+            </div>
+          </a>
+        <% }) %>
+        <% } %>
+    </section>
+
+    <button id="load-more-btn" class="load-more">Load More Videos</button>
+  </main>
+
+  <!-- Back to Top button -->
+  <button id="back-to-top-btn" class="back-to-top">Back to Top</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const loadMoreBtn = document.getElementById("load-more-btn");
+      const videosSection = document.querySelector(".videos");
+      const backToTopBtn = document.getElementById("back-to-top-btn");
+
+      /**
+       * Load more videos dynamically.
+       * @param {string} section - The section of videos to load (e.g., 'trending', 'featured', 'latest', 'random').
+       */
+      async function loadMoreVideos(section = "trending") {
+        try {
+          const response = await fetch(`/api/videos?section=${section}`);
+          if (!response.ok) throw new Error("Network response was not ok");
+
+          const newVideos = await response.json();
+
+          newVideos.forEach((video) => {
+            const videoCard = document.createElement("a");
+            videoCard.href = `/video/${video.video_id}`;
+            videoCard.classList.add("video-card", section);
+
+            videoCard.innerHTML = `
+              <img src="${video.minea ? '/vid/min/' + video.minea : '/esaw/vid-user-logo-defaul/banerdf.jpg'}" alt="Video Thumbnail" loading="lazy">
+              <div class="video-info">
+                <h3>${video.titulo}</h3>
+                <p>${video.usernick} • ${video.vistas} views</p>
+              </div>
+            `;
+
+            videosSection.appendChild(videoCard);
+          });
+
+          showNotification(`Loaded more ${section} videos`, "success", 3000);
+        } catch (error) {
+          console.error("Error loading more videos:", error);
+          showNotification("Error loading more videos", "error", 3000);
+        }
+      }
+
+      // Event listener for "Load More" button
+      loadMoreBtn.addEventListener("click", () => loadMoreVideos("random"));
+
+      // Back to Top button functionality
+      window.addEventListener("scroll", () => {
+        backToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+      });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Function to show notifications
+      function showNotification(message, type, duration) {
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => notification.remove(), duration);
+      }
+    });
+  </script>
+
+  <!-- Include footer -->
+  <%- include('../banners/footer.ejs') %>
+
+</body>
+</html>

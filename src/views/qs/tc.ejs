@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones | Política de Privacidad</title>
+    <style>/* Estilo General */
+ /* Estilo General */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* Header */
+.header {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+
+    background: linear-gradient(to right, #272729, #101113);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#back-to-top-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  display: none;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+#back-to-top-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+}
+
+.header .logo {
+    display: flex;
+    align-items: center;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.header .logo img {
+    width: 50px;
+    margin-right: 10px;
+}
+.header .logo .txt {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, #0066ff, #00ccff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeIn 1.5s ease-in-out;
+}
+.header .nav a {
+    color: #ffffff;
+    margin-left: 15px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.header .nav a:hover {
+    color: #64b5f6;
+}
+
+/* Main Container */
+.main-container {
+    display: flex;
+    margin: 20px auto;
+    max-width: 1200px;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    padding: 20px;
+    background: #1a1a1a;
+    border-radius: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li a {
+    display: block;
+    color: #3a9eac;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: #032668;
+}
+
+/* Content */
+.content {
+    flex: 1;
+    margin-left: 20px;
+    padding: 20px;
+    background: linear-gradient(90deg, #00131b, #1c1d1d);
+    border-radius: 8px;
+}
+
+.content h1, .content h2 {
+    color: #64b5f6;
+    margin-bottom: 10px;
+}
+
+.content p {
+    margin-bottom: 15px;
+    color: #e0e0e0;
+}
+        </style>
+</head>
+<body>
+    <!-- Header -->
+    <%- include('./header.ejs') %>
+
+
+    <!-- Contenido Principal -->
+    <main class="main-container">
+        <aside class="sidebar">
+            <ul>
+                <li><a href="#introduccion">Introducción</a></li>
+                <li><a href="#politica">Política de Privacidad</a></li>
+                <li><a href="#terms-conditions">Términos y Condiciones</a></li>
+                <li><a href="/Zypher/support#faq">Preguntas Frecuentes</a></li>
+            </ul>
+        </aside>
+        <section class="content">
+            <!-- Introducción -->
+            <h2 id="introduccion">Introducción</h2>
+            <p>
+                Bienvenido a Zypher, una plataforma diseñada para brindar una experiencia segura, personalizable y de alta calidad a nuestros usuarios y socios anunciantes. Antes de utilizar nuestros servicios, es importante que leas y comprendas los <strong>Términos y Condiciones</strong> y la <strong>Política de Privacidad</strong>, que rigen el uso de nuestra plataforma. Estos documentos establecen las reglas, derechos y responsabilidades tanto para Zypher como para los usuarios y anunciantes, asegurando una interacción transparente y confiable.
+            </p>
+            <p>
+                En Zypher, valoramos tu privacidad y seguridad. Por ello, hemos implementado medidas robustas para proteger tu información personal y garantizar que tu experiencia sea positiva y satisfactoria. Este documento te guiará a través de los principales aspectos de nuestra plataforma, incluyendo cómo gestionamos tus datos, los derechos que tienes sobre ellos, y las condiciones bajo las cuales puedes utilizar nuestros servicios.
+            </p>
+            <p>
+                Si tienes preguntas o inquietudes, no dudes en contactarnos. Nuestro equipo está comprometido con ofrecer un entorno confiable y profesional para todos los usuarios y anunciantes. ¡Gracias por elegir Zypher!
+            </p>
+    
+            <!-- Política de Privacidad -->
+            <h2 id="politica">Política de Privacidad</h2>
+            <p><strong>Fecha de entrada en vigor:</strong> 09/12/2024</p>
+            <p>
+                Gracias por utilizar Zypher. Tu privacidad es de suma importancia para nosotros. Esta Política de Privacidad explica cómo recopilamos, usamos, protegemos y compartimos tu información personal al utilizar nuestra plataforma. Zypher se compromete a cumplir con todas las leyes de privacidad y protección de datos aplicables.
+            </p>
+    
+            <h3>1. Información que Recopilamos</h3>
+            <ul>
+                <li><strong>1.1 Información proporcionada por el usuario:</strong> Incluye nombre, correo electrónico, fecha de nacimiento, ubicación, género y cualquier otra información opcional proporcionada en el perfil.</li>
+                <li><strong>1.2 Información recopilada automáticamente:</strong> Datos como historial de navegación, dirección IP, tipo de dispositivo, cookies y preferencias de uso.</li>
+                <li><strong>1.3 Información de terceros:</strong> Datos recibidos al vincular cuentas con plataformas externas.</li>
+                <li><strong>1.4 Información confidencial:</strong> Zypher no solicita ni recopila información confidencial deliberadamente.</li>
+            </ul>
+    
+            <h3>2. Cómo Usamos tu Información</h3>
+            <ul>
+                <li><strong>2.1 Provisión del servicio:</strong> Personalizamos tu experiencia, mejoramos recomendaciones y ofrecemos soporte técnico.</li>
+                <li><strong>2.2 Comunicaciones:</strong> Envío de notificaciones importantes, promociones y encuestas opcionales.</li>
+                <li><strong>2.3 Seguridad:</strong> Prevención de actividades fraudulentas y garantía de un entorno seguro.</li>
+            </ul>
+    
+            <h3>3. Protección de tu Información</h3>
+            <ul>
+                <li>Implementación de encriptación avanzada y autenticación de múltiples factores.</li>
+                <li>Acceso limitado a información personal para personal autorizado.</li>
+                <li>Auditorías regulares para detectar vulnerabilidades.</li>
+            </ul>
+    
+            <h3>4. Tus Derechos</h3>
+            <ul>
+                <li><strong>4.1 Acceso y corrección:</strong> Modificar o actualizar información desde tu cuenta.</li>
+                <li><strong>4.2 Eliminación:</strong> Solicitar la eliminación de tus datos, salvo requerimientos legales.</li>
+                <li><strong>4.3 Restricción:</strong> Controlar el uso de tus datos en ciertos contextos.</li>
+            </ul>
+    
+            <!-- Términos y Condiciones para Usuarios -->
+            <h2 id="terms-conditions">Términos y Condiciones para Usuarios</h2>
+            <h3>1. Uso de la Plataforma</h3>
+            <ul>
+                <li>Zypher está diseñado exclusivamente para fines legales. Está prohibido:</li>
+                <ul>
+                    <li>Promover o almacenar contenido ilegal o dañino.</li>
+                    <li>Infringir derechos de propiedad intelectual de terceros.</li>
+                    <li>Participar en actividades fraudulentas.</li>
+                </ul>
+            </ul>
+    
+            <h3>2. Contenido de Usuario</h3>
+            <ul>
+                <li>Los usuarios conservan la propiedad de su contenido, pero otorgan a Zypher una licencia para operar.</li>
+                <li>Eres responsable de que tu contenido cumpla con las leyes aplicables.</li>
+            </ul>
+    
+            <h3>3. Modificaciones</h3>
+            <p>Zypher puede modificar estos términos notificando a los usuarios con anticipación.</p>
+    
+            <!-- Términos y Condiciones para Anunciantes -->
+            <h2 id="advertiser-terms">Términos y Condiciones para Anunciantes</h2>
+            <h3>1. Registro y Aprobación</h3>
+            <p>
+                Para utilizar los servicios de publicidad de Zypher, los anunciantes deben registrar una cuenta y proporcionar información precisa sobre su empresa o marca. Zypher revisará y aprobará todas las cuentas antes de habilitar la publicación de anuncios.
+            </p>
+    
+            <h3>2. Contenido Publicitario</h3>
+            <ul>
+                <li>Los anuncios deben cumplir con nuestras políticas de contenido, incluyendo:</li>
+                <ul>
+                    <li>No promover productos o servicios ilegales.</li>
+                    <li>No contener contenido engañoso, ofensivo o dañino.</li>
+                </ul>
+                <li>Zypher se reserva el derecho de rechazar o eliminar anuncios que violen estas políticas.</li>
+            </ul>
+    
+            <h3>3. Pagos y Facturación</h3>
+            <p>
+                Los anunciantes son responsables de los costos asociados con la publicación de sus anuncios, que se calcularán en función del formato y alcance seleccionado. Las facturas se generarán mensualmente y deberán ser pagadas puntualmente.
+            </p>
+    
+            <h3>4. Modificaciones de Anuncios</h3>
+            <p>
+                Zypher permite a los anunciantes modificar sus anuncios durante la campaña, siempre y cuando cumplan con las políticas actuales. Los cambios podrán estar sujetos a revisión adicional.
+            </p>
+    
+            <h3>5. Terminación</h3>
+            <p>
+                Zypher se reserva el derecho de suspender o cancelar cuentas de anunciantes que violen los términos establecidos, sin obligación de reembolso en caso de infracción.
+            </p>
+    
+            <!-- Cómo se Relaciona con los Usuarios -->
+            <h2 id="ad-interaction">Relación con los Usuarios</h2>
+            <p>
+                Zypher utiliza sistemas avanzados para ofrecer anuncios relevantes y no invasivos. Gracias al sistema <strong>AdSense+</strong>, los anuncios se basan en el comportamiento del usuario, garantizando contenido alineado con sus intereses mientras se respeta su privacidad.
+            </p>
+            <p>
+                Los usuarios tienen control sobre la personalización de anuncios mediante la configuración de preferencias en su cuenta, asegurando una experiencia adaptada a sus necesidades.
+            </p>
+    
+            <!-- Contacto -->
+            <h3>Contacto</h3>
+            <p>Si tienes dudas sobre estos términos, contáctanos en <a href="mailto:soporte@zypher.com">soporte@zypher.com</a>.</p>
+        </section>
+        
+        <button id="back-to-top-btn" class="back-to-top">Back to Top</button>
+
+    </main>
+    <script>
+              const backToTopBtn = document.getElementById("back-to-top-btn");
+              window.addEventListener("scroll", () => {
+        backToTopBtn.style.display = window.scrollY > 200 ? "block" : "none";
+      });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+    </script>
+    <%- include('../banners/footer.ejs') %>
+
+</body>
+</html>

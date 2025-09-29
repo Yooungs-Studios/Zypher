@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categoría - Zypher</title>
+    <link rel="icon" href="/esaw/vid-user-logo-defaul/zypherr(1).png">
+
+    <style>
+        /* Manteniendo el estilo del diseño principal */
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1e90ff;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #00d1b2;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1e2e, #292938);
+            color: #ffffff;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 2px solid #1e90ff;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            color: #9da5b4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .category-section {
+            background: #1e1e2e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .category-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #00d1b2;
+        }
+
+        .post {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #292938;
+            padding-bottom: 20px;
+        }
+
+        .post h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            color: #9da5b4;
+        }
+
+        .post p {
+            color: #b2b2b2;
+            margin: 10px 0;
+        }
+
+        .post a {
+            font-weight: bold;
+        }
+
+        footer {
+            background: #1e1e2e;
+            color: #9da5b4;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 2px solid #1e90ff;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./header.ejs') %>
+
+    <header>
+        <h1>Categoría: <%= categoria.nombre %></h1>
+        <p>Explora todos los artículos relacionados con esta categoría</p>
+    </header>
+
+    <div class="container">
+        <div class="category-section">
+            <h2>Artículos en <%= categoria.nombre %></h2>
+
+            <% if (blogs.length > 0) { %>
+                <% blogs.forEach(blog => { %>
+                    <div class="post">
+                        <h3><a href="/blog/post/<%= blog.post_id %>"><%= blog.titulo %></a></h3>
+                        <p><strong>Publicado el:</strong> <%= blog.fecha_publicacion %></p>
+                        <p><%= blog.descripcion %></p>
+                        <a href="/blog/post/<%= blog.post_id %>">Leer más &rarr;</a>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No hay artículos disponibles en esta categoría.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <%- include('../banners/footer.ejs') %>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Comunidad</title>
+    <link rel="stylesheet" href="/styles/community-management.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Comunidad</h1>
+    </header>
+    <main>
+        <section id="comments-section">
+            <h2>Comentarios</h2>
+            <input type="text" id="filter-input" placeholder="Filtrar por palabras clave">
+            <button onclick="filterComments()">Filtrar</button>
+            <ul id="comments-list">
+                <% comments.forEach(comment => { %>
+                    <li class="<%= comment.type %>">
+                        <p><strong><%= comment.user %>:</strong> <%= comment.text %></p>
+                        <div class="actions">
+                            <button onclick="replyComment('<%= comment.id %>')">Responder</button>
+                            <button onclick="deleteComment('<%= comment.id %>')">Eliminar</button>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+
+        <section id="private-messages">
+            <h2>Mensajes Privados</h2>
+            <ul>
+                <% messages.forEach(message => { %>
+                    <li>
+                        <p><strong><%= message.sender %>:</strong> <%= message.text %></p>
+                        <button onclick="replyMessage('<%= message.id %>')">Responder</button>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+    </main>
+    <script src="/scripts/community-management.js"></script>
+</body>
+</html>

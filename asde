@@ -1,0 +1,159 @@
+import os
+import zipfile
+from pathlib import Path
+
+# Definir estructura base del proyecto
+project_root = Path("nest_static_project")
+frontend_path = project_root / "frontend-static"
+src_path = project_root / "src"
+home_module_path = src_path / "home"
+auth_module_path = src_path / "auth"
+database_path = project_root / "database"
+
+# Crear carpetas necesarias
+dirs_to_create = [
+    frontend_path / "views",
+    frontend_path / "css",
+    frontend_path / "js",
+    frontend_path / "img",
+    src_path,
+    home_module_path,
+    auth_module_path,
+    database_path
+]
+
+for dir_path in dirs_to_create:
+    os.makedirs(dir_path, exist_ok=True)
+
+# Contenido de los archivos
+files_to_create = {
+    src_path / "main.ts": '''import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
+}
+bootstrap();
+''',
+
+    src_path / "app.module.ts": '''import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
+import { HomeModule } from './home/home.module';
+import { AuthModule } from './auth/auth.module';
+
+@Module({
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'frontend-static'),
+    }),
+    HomeModule,
+    AuthModule,
+  ],
+})
+export class AppModule {}
+''',
+
+    home_module_path / "home.controller.ts": '''import { Controller, Get, Res } from '@nestjs/common';
+import { Response } from 'express';
+import { join } from 'path';
+
+@Controller()
+export class HomeController {
+  @Get()
+  getHome(@Res() res: Response) {
+    res.sendFile(join(__dirname, '..', '..', '..', 'frontend-static', 'views', 'home.html'));
+  }
+}
+''',
+
+    home_module_path / "home.module.ts": '''import { Module } from '@nestjs/common';
+import { HomeController } from './home.controller';
+
+@Module({
+  controllers: [HomeController],
+})
+export class HomeModule {}
+''',
+
+    auth_module_path / "auth.controller.ts": '''import { Controller, Get, Res } from '@nestjs/common';
+import { Response } from 'express';
+import { join } from 'path';
+
+@Controller('auth')
+export class AuthController {
+  @Get()
+  getAuth(@Res() res: Response) {
+    res.sendFile(join(__dirname, '..', '..', '..', 'frontend-static', 'views', 'auth.html'));
+  }
+}
+''',
+
+    auth_module_path / "auth.module.ts": '''import { Module } from '@nestjs/common';
+import { AuthController } from './auth.controller';
+
+@Module({
+  controllers: [AuthController],
+})
+export class AuthModule {}
+''',
+
+    database_path / "database.ts": '''import sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
+import { join } from 'path';
+
+export async function createDbConnection() {
+  const db = await open({
+    filename: join(__dirname, 'database.db'),
+    driver: sqlite3.Database,
+  });
+
+  return db;
+}
+''',
+
+    frontend_path / "views" / "home.html": '''<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <h1>Bienvenido al Home</h1>
+  <script src="/js/app.js"></script>
+</body>
+</html>
+''',
+
+    frontend_path / "views" / "auth.html": '''<!DOCTYPE html>
+<html>
+<head>
+  <title>Auth</title>
+</head>
+<body>
+  <h1>Página de Autenticación</h1>
+</body>
+</html>
+''',
+
+    frontend_path / "css" / "style.css": '''body { font-family: sans-serif; background-color: #f0f0f0; }''',
+    frontend_path / "js" / "app.js": '''console.log("JS cargado desde app.js");'''
+}
+
+# Crear los archivos
+for path, content in files_to_create.items():
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+# Empaquetar como ZIP
+zip_filename = "nest_static_project.zip"
+with zipfile.ZipFile(zip_filename, 'w') as zipf:
+    for folder_name, subfolders, filenames in os.walk(project_root):
+        for filename in filenames:
+            file_path = os.path.join(folder_name, filename)
+            arcname = os.path.relpath(file_path, project_root)
+            zipf.write(file_path, arcname)
+
+print(f"Proyecto generado y comprimido como: {zip_filename}")

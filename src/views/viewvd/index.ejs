@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video de prueba</title>
+  <link rel="stylesheet" href="/asdf/viewvd/styles.css">
+</head>
+<body>
+  <%- include('../banners/heade.ejs') %>
+  
+  <main class="player-container">
+    <section class="video-section">
+      <div class="video-wrapper">
+        <video id="mainVideo" class="video-player" aria-label="Video player">
+          <source src="/vid/videos/<%= video.vid %>" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div class="custom-controls" role="toolbar" aria-label="Video controls">
+          <div class="progress-container" role="progressbar" aria-label="Progress bar">
+            <div id="bufferedBar" class="buffered-bar"></div>
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+          <div class="control-section">
+            <button id="playPauseBtn" class="control-btn" aria-label="Play/Pause">
+              <img src="/esaw/icons/play.png" alt="Play/Pause" id="playPauseIcon">
+            </button>
+            <span id="timeIndicator" class="time-indicator">0:00 / 0:00</span>
+            <input id="volumeSlider" class="volume-slider" type="range" min="0" max="1" step="0.1" value="1" aria-label="Volume control">
+            <button id="fullscreenBtn" class="control-btn" aria-label="Fullscreen">
+              <img src="/esaw/icons/fullscreen.png" alt="Fullscreen">
+            </button>
+            <select id="qualitySelector" class="control-dropdown" aria-label="Select video quality">
+              <option value="hd">HD</option>
+              <option value="sd">SD</option>
+              <option value="ld">LD</option>
+            </select>
+            <select id="speedSelector" class="control-dropdown" aria-label="Select playback speed">
+              <option value="1">1x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2">2x</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-info">
+        <h1 class="video-title"><%= video.titulo %></h1>
+        <div class="video-stats">
+          <p class="views"><%= video.vistas %> views • <span class="upload-date">2 days ago</span></p>
+          <div class="actions">
+            <button class="action-btn like-btn" id="likeBtn">★ Like <span id="likeCount"><%= video.likes %></span></button>
+            <button class="action-btn dislike-btn" id="dislikeBtn">☆ Dislike <span id="dislikeCount"><%= video.dislikes %></span></button>
+            <button class="action-btn share-btn">🔗 Share</button>
+            <button class="action-btn save-btn">💾 Save</button>
+            <button class="action-btn more-btn">...</button>
+          </div>
+        </div>
+
+          <div class="channel-info">
+            <img src="/esaw/vid-user-logo-defaul/userdf.jpg" alt="Channel Avatar" class="channel-avatar">
+            <div class="channel-details">
+              <p class="channel-name"><%= video.usernick %></p>
+              <p class="channel-subscribers" id="subcounter">1.3M Subscribers</p>
+            </div>
+            <button class="subscribe-btn" id="subtn">Subscribe</button>
+          </div>
+        </div>
+  
+        <div class="description-box">
+          <p class="uploader-info">Uploaded by <span class="uploader">Hola4885</span></p>
+          <p class="video-description" id="videoDescription">
+            <%= video.descripcion %>
+          </p>
+          <button class="show-more-btn" id="showMoreBtn">Show More</button>
+        </div>
+  
+        <div class="comments-section">
+          <h2>Comments</h2>
+          <div class="add-comment">
+            <img src="/esaw/vid-user-logo-defaul/userdf.jpg" alt="User Avatar" class="user-avatar">
+            <input type="text" placeholder="Add a comment..." class="comment-input" id="newCommentInput">
+            <button class="post-comment-btn" id="postCommentBtn">Post</button>
+          </div>
+          <div class="comments-list" id="commentsList">
+              <div class="comment">
+                <img src="/esaw/vid-user-logo-defaul/userdf.jpg" alt="User Avatar" class="user-avatar">
+                <div class="comment-body">
+                  <p class="username">hola4885<span class="time">hoy</span></p>
+                  <p class="comment-text">wow</p>
+                </div>
+              </div>
+     
+          </div>
+        </div>
+      </section>
+      <aside class="suggested-videos">
+        <h2>Suggested Videos</h2>
+        <% recommendedVideos.forEach(video => { %>
+  
+        <a href="/video/<%= video.video_id %>" class="video-card">
+          <% if (video.minea == null) { %>
+            <img src="/esaw/vid-user-logo-defaul/banerdf.jpg" alt="Thumbnail">
+          <% } else { %>
+            <img src="/vid/min/<%= video.minea %>" alt="Thumbnail">
+          <% } %>
+          <div class="info">
+            <h3><%= video.titulo %></h3>
+            <p><%= video.channel_name %> • <%= video.vistas %> views</p>
+          </div>
+        </a>
+        <% }) %>
+      </aside>
+    </main>
+
+  <script>
+      document.addEventListener("DOMContentLoaded", () => {
+      const likeBtn = document.getElementById("likeBtn");
+      const dislikeBtn = document.getElementById("dislikeBtn");
+      const likeCount = document.getElementById("likeCount");
+      const newCommentInput = document.getElementById("newCommentInput"); 
+      const dislikeCount = document.getElementById("dislikeCount");     
+    
+       const sub = document.getElementById("subtn");
+       const subcom = document.getElementById("subcounter");
+
+
+      const videoId = "<%= video.video_id %>"; // Video ID para las solicitudes
+      sub.addEventListener("click", async () => {
+        try {
+          const response = await fetch(`/subscribe`, { method: "POST" });
+          if (response.ok) {
+            const data = await response.json();
+            subcom.textContent = data.sub; // Actualizar número de dislikes
+          } else {
+            console.error("Error al procesar el like");
+          }
+        } catch (error) {
+          console.error("Error en la solicitud de like:", error);
+        }
+      });
+
+      // Manejar el Like
+      likeBtn.addEventListener("click", async () => {
+        try {
+          const response = await fetch(`/video/${videoId}/like`, { method: "POST" });
+          if (response.ok) {
+            const data = await response.json();
+            likeCount.textContent = data.likes; // Actualizar número de likes
+            dislikeCount.textContent = data.dislikes; // Actualizar número de dislikes
+          } else {
+            console.error("Error al procesar el like");
+          }
+        } catch (error) {
+          console.error("Error en la solicitud de like:", error);
+        }
+      });
+
+      // Manejar el Dislike
+      dislikeBtn.addEventListener("click", async () => {
+        try {
+          const response = await fetch(`/video/${videoId}/dislike`, { method: "POST" });
+          if (response.ok) {
+            const data = await response.json();
+            likeCount.textContent = data.likes; // Actualizar número de likes
+            dislikeCount.textContent = data.dislikes; // Actualizar número de dislikes
+          } else {
+            console.error("Error al procesar el dislike");
+          }
+        } catch (error) {
+          console.error("Error en la solicitud de dislike:", error);
+        }
+      });
+    });
+document.addEventListener("DOMContentLoaded", () => {
+  const videoPlayer = document.getElementById("mainVideo");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const playPauseIcon = document.getElementById("playPauseIcon");
+  const progressBar = document.getElementById("progressBar");
+  const timeIndicator = document.getElementById("timeIndicator");
+  const progressBarContainer = document.querySelector(".progress-container");
+  const fullscreenBtn = document.getElementById("fullscreenBtn");
+  const volumeSlider = document.getElementById("volumeSlider");
+  const customControls = document.querySelector(".custom-controls");
+  const descriptionBox = document.querySelector(".description-box");
+  const showMoreBtn = document.getElementById("showMoreBtn");
+  const commentsList = document.getElementById("commentsList");
+  const newCommentInput = document.getElementById("newCommentInput");
+  const postCommentBtn = document.getElementById("postCommentBtn");
+
+  postCommentBtn.addEventListener("click", async () => {
+    const comentario = newCommentInput.value.trim();
+
+    if (!comentario) {
+      alert("El comentario no puede estar vacío");
+      return;
+    }
+
+    try {
+      const response = await fetch(`/video/${videoId}/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ comentario }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+
+        // Limpiar el input y mostrar el nuevo comentario
+        newCommentInput.value = "";
+       const newComment = document.createElement("div");
+    newComment.classList.add("comment");
+    newComment.innerHTML = `
+      <img src="/esaw/vid-user-logo-defaul/userdf.jpg" alt="User Avatar" class="user-avatar">
+      <div class="comment-body">
+        <p class="username"> <span class="time">just now</span></p>
+        <p class="comment-text">${newCommentText}</p>
+      </div>
+    `;
+    window.location.reload;
+
+    commentsList.prepend(newComment);
+    newCommentInput.value = "";
+      } else {
+        alert("Error al enviar el comentario");
+      }
+    } catch (error) {
+      console.error("Error al enviar el comentario:", error);
+    }
+  });
+  // Control de volumen
+  volumeSlider.addEventListener("input", () => {
+    videoPlayer.volume = volumeSlider.value;
+  });
+
+  // Botón de Play/Pause
+  playPauseBtn.addEventListener("click", () => {
+    togglePlayPause();
+  });
+
+  // Click en el video para Play/Pause
+  videoPlayer.addEventListener("click", () => {
+    togglePlayPause();
+  });
+  videoPlayer.addEventListener("dblclick", () => {
+  toggleFullscreen();
+});
+
+  // Mostrar/Actualizar barra de progreso y tiempo
+  videoPlayer.addEventListener("timeupdate", () => {
+    const currentTime = videoPlayer.currentTime;
+    const duration = videoPlayer.duration;
+
+    if (duration > 0) {
+      const progressPercent = (currentTime / duration) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+      timeIndicator.textContent = `${formatTime(currentTime)} / ${formatTime(duration)}`;
+    }
+  });
+
+  // Permitir ajustar progreso con click
+  progressBarContainer.addEventListener("click", (e) => {
+    const rect = progressBarContainer.getBoundingClientRect();
+    const clickRatio = (e.clientX - rect.left) / rect.width;
+    videoPlayer.currentTime = videoPlayer.duration * clickRatio;
+  });
+
+  // Botón de Pantalla Completa
+  fullscreenBtn.addEventListener("click", () => {
+    toggleFullscreen();
+  });
+
+  // Alternar entre Play y Pause
+  const togglePlayPause = () => {
+    if (videoPlayer.paused) {
+      videoPlayer.play();
+      playPauseIcon.src = "/esaw/icons/pause.png";
+    } else {
+      videoPlayer.pause();
+      playPauseIcon.src = "/esaw/icons/play.png";
+    }
+  };
+
+  // Función de mostrar más en la descripción
+  showMoreBtn.addEventListener("click", () => {
+    const description = document.getElementById("videoDescription");
+    if (description.style.height === "auto") {
+      description.style.height = "50px"; // Limita el tamaño
+      showMoreBtn.textContent = "Show More";
+    } else {
+      description.style.height = "auto"; // Expande la descripción
+      showMoreBtn.textContent = "Show Less";
+    }
+  });
+
+  // Función de pantalla completa
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      videoPlayer.requestFullscreen().catch(handleFullscreenError);
+    } else {
+      document.exitFullscreen();
+    }
+  };
+
+  const handleFullscreenError = (error) => {
+    console.error("Error en el modo de pantalla completa: ", error);
+  };
+
+  const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds}`;
+  };
+
+  // Mostrar los controles cuando el ratón está sobre el reproductor
+  videoPlayer.addEventListener("mouseenter", () => showControls());
+  videoPlayer.addEventListener("mouseleave", () => hideControls());
+  customControls.addEventListener("mouseenter", () => showControls());
+  customControls.addEventListener("mouseleave", () => hideControls());
+  
+  const showControls = () => {
+    customControls.style.opacity = "1";
+    customControls.style.visibility = "visible";
+  };
+
+  const hideControls = () => {
+    customControls.style.opacity = "0";
+    customControls.style.visibility = "hidden";
+  };
+  
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const cineModeBtn = document.createElement("button");
+  const container = document.querySelector(".player-container");
+
+  // Añadir clase al botón
+  cineModeBtn.classList.add("control-btn");
+
+  // Agregar imagen al botón
+  const cineIcon = document.createElement("img");
+  cineIcon.src = "/esaw/vid-user-logo-defaul/cine.gif"; // Ruta de la imagen
+  cineIcon.alt = "Modo Cine";
+  cineModeBtn.appendChild(cineIcon);
+
+  // Añadir botón a la sección de controles
+  document.querySelector(".control-section").appendChild(cineModeBtn);
+
+  // Activar/Desactivar Modo Cine
+  cineModeBtn.addEventListener("click", () => {
+    if (container.classList.contains("cine-mode")) {
+      // Salir del modo cine
+      container.classList.remove("cine-mode");
+      document.body.style.overflow = "auto";
+      cineIcon.src = "/esaw/vid-user-logo-defaul/cine.gif"; // Imagen para Modo Cine
+    } else {
+      // Entrar al modo cine
+      container.classList.add("cine-mode");
+      document.body.style.overflow = "";
+      cineIcon.src = "/esaw/vid-user-logo-defaul/cine.gif"; // Imagen para salir del Modo Cine
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const likeBtn = document.querySelector(".like-btn");
+  const dislikeBtn = document.querySelector(".dislike-btn");
+  const postCommentBtn = document.getElementById("postCommentBtn");
+  const newCommentInput = document.getElementById("newCommentInput");
+  const commentsList = document.getElementById("commentsList");
+  const videoId = "<%= video.video_id %>"; // Usar el ID del video desde el servidor
+
+  // Manejar el like
+  likeBtn.addEventListener("click", async () => {
+    try {
+      const response = await fetch(`/video/${videoId}/like`, {
+        method: 'POST',
+      });
+
+      if (response.ok) {
+        alert('You liked the video!');
+        // Actualizar UI según el estado
+      } else {
+        alert(await response.text());
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error while liking the video');
+    }
+  });
+
+  // Manejar el dislike
+  dislikeBtn.addEventListener("click", async () => {
+    try {
+      const response = await fetch(`/video/${videoId}/dislike`, {
+        method: 'POST',
+      });
+
+      if (response.ok) {
+        alert('You disliked the video!');
+        // Actualizar UI según el estado
+      } else {
+        alert(await response.text());
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error while disliking the video');
+    }
+  });
+
+  // Manejar el comentario
+  postCommentBtn.addEventListener("click", async () => {
+    const newCommentText = newCommentInput.value.trim();
+    if (newCommentText === "") return;
+
+    try {
+      const response = await fetch(`/video/${videoId}/comment`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ comentario: newCommentText }),
+      });
+
+      if (response.ok) {
+        const newComment = document.createElement("div");
+        newComment.classList.add("comment");
+        newComment.innerHTML = `
+          <p class="comment-text">${newCommentText}</p>
+        `;
+        commentsList.prepend(newComment);
+        newCommentInput.value = ""; // Limpiar el input
+      } else {
+        alert(await response.text());
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error while posting comment');
+    }
+  });
+});
+
+</script>
+<script src="../../js/ad/script.js"></script>
+
+</body>
+</html>

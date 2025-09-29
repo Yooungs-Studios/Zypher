@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        footer {
+            box-shadow: 0px 0px 20px rgba(17, 43, 43, 0.8);
+            border-top: 2px solid #1e90ff;
+
+            background-color: #03242c94;
+            color: #ecf0f1;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 1em;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 30px;
+            width: 60%;
+        }
+
+        .footer-links ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links ul li {
+            margin: 5px 0;
+        }
+
+        .footer-links ul li a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: #1abc9c;
+        }
+
+        .footer-info {
+            width: 35%;
+            font-size: 0.9em;
+            text-align: left;
+        }
+
+        .footer-info p {
+            margin: 10px 0;
+        }
+
+        .footer-info a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-info a:hover {
+            color: #1abc9c;
+        }
+
+        .footer-info .social-links a {
+            margin-right: 15px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+            }
+
+            .footer-info {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <ul>
+             
+                </ul>
+                <ul>
+                    <li><a href="/Zypher/support">Soporte</a></li>
+                    <li><a href="/Zypher/wiki">Quiénes Somos</a></li>
+                    <li><a href="/Zypher/tc#terms-conditions">Términos y Condiciones</a></li>
+                    <li><a href="/Zypher/tc#politica">Política de Privacidad</a></li>
+                    <li><a href="/support/support#faq">Preguntas Frecuentes</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-info">
+                <p>© 2024 Zypher | Todos los derechos reservados</p>
+                <p>Desarrollado por <a href="https://kinglyfenix.com" target="_blank">KinglyFenix Studios</a></p>
+                <p>¡Síguenos en nuestras redes sociales!</p>
+                <div class="social-links">
+                    <a href="https://facebook.com/zypher" target="_blank">Facebook</a> |
+                    <a href="https://twitter.com/zypher" target="_blank">Twitter</a> |
+                    <a href="https://instagram.com/zypher" target="_blank">Instagram</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

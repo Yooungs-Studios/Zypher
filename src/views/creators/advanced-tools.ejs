@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herramientas Avanzadas</title>
+    <link rel="stylesheet" href="/styles/advanced-tools.css">
+</head>
+<body>
+    <header>
+        <h1>Herramientas Avanzadas</h1>
+    </header>
+    <main>
+        <section id="video-editor">
+            <h2>Editor de Video</h2>
+            <button onclick="openVideoEditor()">Abrir Editor</button>
+        </section>
+
+        <section id="seo-tools">
+            <h2>Herramientas SEO</h2>
+            <button onclick="showSEOTips()">Mostrar Sugerencias SEO</button>
+            <div id="seo-suggestions"></div>
+        </section>
+
+        <section id="description-generator">
+            <h2>Generador de Descripciones</h2>
+            <textarea id="description-input" placeholder="Escribe tu descripción aquí..."></textarea>
+            <button onclick="generateDescription()">Generar Descripción</button>
+            <div id="generated-description"></div>
+        </section>
+
+        <section id="resource-library">
+            <h2>Biblioteca de Recursos</h2>
+            <ul>
+                <li><button onclick="openResource('music')">Música sin Derechos de Autor</button></li>
+                <li><button onclick="openResource('templates')">Plantillas de Miniaturas</button></li>
+            </ul>
+        </section>
+    </main>
+    <script src="/scripts/advanced-tools.js"></script>
+</body>
+</html>

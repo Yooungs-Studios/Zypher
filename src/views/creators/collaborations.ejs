@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Colaboraciones</title>
+    <link rel="stylesheet" href="/styles/collaborations.css">
+</head>
+<body>
+    <header>
+        <h1>Gestión de Colaboraciones</h1>
+    </header>
+    <main>
+        <section id="active-collaborations">
+            <h2>Colaboraciones Activas</h2>
+            <ul>
+                <% collaborations.forEach(collab => { %>
+                    <li>
+                        <p><strong><%= collab.creatorName %></strong> está colaborando en <%= collab.contentTitle %></p>
+                        <p>Ingreso compartido: $<%= collab.sharedEarnings %></p>
+                        <button onclick="viewCollaboration('<%= collab.id %>')">Ver detalles</button>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+
+        <section id="collaboration-requests">
+            <h2>Solicitudes de Colaboración</h2>
+            <ul>
+                <% requests.forEach(request => { %>
+                    <li>
+                        <p><strong><%= request.creatorName %></strong> te ha enviado una solicitud para colaborar en <%= request.contentTitle %></p>
+                        <button onclick="acceptCollaboration('<%= request.id %>')">Aceptar</button>
+                        <button onclick="rejectCollaboration('<%= request.id %>')">Rechazar</button>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+    </main>
+    <script src="/scripts/collaborations.js"></script>
+</body>
+</html>
