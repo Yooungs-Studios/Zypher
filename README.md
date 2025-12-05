@@ -1,61 +1,106 @@
-# Zyper
+<div align="center">
+  <h1>ZYPHER</h1>
+  <h3>Intelligent Media Streaming & Recommendation Engine</h3>
+  
+  <p>
+    A high-performance content distribution platform powered by 
+    real-time recommendation algorithms and user metrics analysis.
+  </p>
+  
+  <p><strong>Developed by Yooungs Studios</strong></p>
 
-Zyper es una plataforma avanzada para la gestión, recomendación y reproducción de contenido multimedia, desarrollada por KinglyFenix Studios. El sistema está diseñado para creadores y usuarios, integrando algoritmos inteligentes de recomendación, seguridad y personalización. **No se permite la colaboración externa en este repositorio.**
+  <img src="https://img.shields.io/badge/Node.js-Backend-339933?style=for-the-badge&logo=nodedotjs" />
+  <img src="https://img.shields.io/badge/FFmpeg-Media_Processing-007808?style=for-the-badge&logo=ffmpeg" />
+  <img src="https://img.shields.io/badge/SQLite-Persistence-003B57?style=for-the-badge&logo=sqlite" />
+  <img src="https://img.shields.io/badge/Architecture-MVC-orange?style=for-the-badge" />
+  
+  <br /><br />
+</div>
 
-## Características Principales
+---
 
-- **Recomendaciones Inteligentes:** Algoritmos como ClickRec+, SubRec+, TasteRec+, EngageRec y RandRec+ priorizan videos según clics, vistas, suscripciones, participación y descubrimiento, usando datos de interacción y preferencias de usuario.
-- **TrendFactor:** Sistema de puntuación dinámica que evalúa la popularidad y relevancia de los videos en tiempo real, recalculando automáticamente cada hora.
-- **Gestión de Creadores:** Registro, administración de canales, suscriptores, videos subidos, avatares y banners.
-- **Blog y Categorías:** Sección de blog con artículos, categorías y posts recientes, permitiendo a los usuarios explorar contenido temático.
-- **Privacidad y Seguridad:** Protocolos de encriptación y políticas estrictas para proteger los datos personales y la actividad de los usuarios.
-- **Paneles y Vistas:** Interfaz moderna con vistas para inicio, tendencias, login, registro, soporte, wiki, detalles técnicos y más.
-- **Notificaciones y Suscripciones:** Sistema de notificaciones y gestión de suscripciones a canales y contenido.
-- **Carga y Optimización de Videos:** Soporte para carga de videos y miniaturas, optimización automática usando ffmpeg.
+## Project Overview
 
-## Estructura del Proyecto
+**Zypher** is an advanced media management and streaming architecture designed to maximize user retention. Unlike standard video players, Zypher integrates a proprietary recommendation engine that analyzes behavioral patterns to serve personalized content feeds.
 
-- `index.js`, `newIndex.js`: Servidor principal Express, rutas, lógica de negocio y conexión a la base de datos.
-- `database.js`, `newdatabase.js`: Manejo de base de datos SQLite.
-- `notifications.js`: Sistema de notificaciones.
-- `prefsis.js`: Preferencias del sistema.
-- `recomendaciones.js`: Lógica de recomendaciones.
-- `recomendalg/`: Algoritmos de recomendación y actualización de preferencias.
-  - `recommendations.js`, `updateTrendFactor.js`, `updateUserPreferences.js`, `userPreferences.js`
-- `src/`: Recursos estáticos y vistas EJS.
-  - `creators/`: Imágenes y recursos para creadores.
-  - `css/`: Hojas de estilo para diferentes módulos.
-  - `img/`: Iconos y logos.
-  - `js/`: Scripts JavaScript organizados por módulo.
-  - `vid/`: Videos y recursos multimedia.
-  - `views/`: Vistas EJS para las diferentes secciones de la plataforma (inicio, blog, wiki, soporte, detalles de algoritmos, login, registro, etc.).
+The system features enterprise-grade data security, automated media optimization via `ffmpeg`, and a dynamic real-time trend scoring system.
 
-## Algoritmos de Recomendación
+---
 
-- **ClickRec+:** Prioriza videos populares considerando clics, vistas, tendencias y relevancia personalizada.
-- **SubRec+:** Resalta contenido relevante de canales suscritos, priorizando actividad reciente y popularidad.
-- **TasteRec+:** Filtrado colaborativo para sugerir contenido disfrutado por usuarios con gustos similares.
-- **EngageRec:** Promueve videos con alta participación (comentarios, compartidos, etc.).
-- **RandRec+:** Sugerencias aleatorias con filtros para descubrir nuevo contenido relevante.
-- **TrendFactor:** Calcula un puntaje dinámico para cada video, considerando vistas, likes, dislikes, clics, compartidos y comentarios, ajustado por el tiempo desde la publicación.
+## Core Engine: Recommendation Algorithms
 
+The distinct feature of Zypher is its suite of algorithms designed to drive User Engagement.
 
+| Algorithm | Function | Business Logic |
+| :--- | :--- | :--- |
+| **TrendFactor** | `Dynamic Scoring` | Hourly recalculation based on view velocity, likes, and shares. Determines real-time virality. |
+| **ClickRec+** | `CTR Optimization` | Prioritizes content with high Click-Through Rates and initial retention. |
+| **SubRec+** | `Feed Priority` | Boosts relevant content from subscribed channels based on recency. |
+| **TasteRec+** | `Collaborative Filtering` | Suggests content based on user clusters with similar consumption habits. |
+| **EngageRec** | `Interaction Weighting` | Promotes videos generating high community participation (comments/debates). |
+| **RandRec+** | `Discovery` | Introduce serendipity by suggesting relevant new content outside the user's usual bubble. |
 
-## Base de Datos
+---
 
-El proyecto utiliza archivos SQLite (`Zypher.db`, `Zypherss.db`) para almacenar datos de usuarios, preferencias, recomendaciones, blogs y categorías.
+## Tech Stack & Architecture
 
-## Vistas y Módulos
+The project follows a modular architecture to ensure scalability and maintainability.
 
-- **Inicio:** Videos en tendencia y recomendaciones personalizadas.
-- **Canal de Creador:** Información, suscriptores, videos y redes sociales.
-- **Blog:** Artículos, categorías y posts recientes.
-- **Wiki:** Transparencia, algoritmos, misión, historia y detalles técnicos.
-- **Soporte:** FAQ, tickets, chat y contacto.
-- **Login/Registro:** Autenticación, verificación por correo y recuperación de contraseña.
-- **Carga de Videos:** Optimización y almacenamiento seguro de archivos multimedia.
-- **Paneles de Usuario y Creador:** Configuración, preferencias y gestión de contenido.
+### Backend & Processing
+* **Runtime:** Node.js (Express Framework).
+* **Media Processing:** **FFmpeg** integration for transcoding and automatic thumbnail generation.
+* **Database:** SQLite (Optimized for fast read operations in local/PoC deployments).
+* **Security:** Sensitive data encryption and strict privacy policies.
 
-## Licencia
+### Module Structure
+```text
+src/
+├── core/
+│   ├── recomendalg/       # Recommendation Logic (The Brain)
+│   │   ├── updateTrendFactor.js
+│   │   └── userPreferences.js
+│   └── notifications.js   # Pub/Sub Event System
+├── database/              # Persistence Layer (SQLite Connectors)
+├── server/                # API Routes & Controllers
+└── public/                # EJS Views & Optimized Assets
+````
 
-Este proyecto está bajo la licencia MIT.
+-----
+
+## System Features
+
+### 1\. Content Management (CMS)
+
+  * **Creator Dashboard:** Administrative panel for metrics, channel customization, and asset management.
+  * **Upload Pipeline:** Secure file upload system with type validation and automatic size optimization.
+
+### 2\. User Experience (UX)
+
+  * **Dynamic Interface:** Server-Side Rendering (SSR) using EJS for fast initial load times.
+  * **Wiki & Support:** Integrated documentation modules and ticket support system.
+  * **Smart Notifications:** Real-time alerts for subscriptions and interactions.
+
+### 3\. Security
+
+  * Secure authentication with email verification.
+  * Admin route protection and session validation.
+
+-----
+
+## License & Rights
+
+**Proprietary Software.**
+This project was developed by **Yooungs Studios**.
+The source code is provided for portfolio demonstration purposes only.
+
+  * **External collaboration is not accepted.**
+  * Commercial redistribution of this code is strictly prohibited without authorization.
+
+-----
+
+\<div align="center"\>
+\<p\>Engineered by \<strong\>Yooungs Studios\</strong\>\</p\>
+\<a href="https://www.google.com/search?q=https://github.com/Yooungs-Studios"\>View Organization Profile\</a\>
+\</div\>
+
+```
